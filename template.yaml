@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  FailingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Timeout: 10
+      MemorySize: 512
+      ImageUri: failingfunction:latest
+      ImageConfig:
+        Command: ["helloworld.App::handleRequest"]
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: .
+      DockerTag: latest
+      DockerBuildArgs:
+        DOCKER_DEFAULT_PLATFORM: linux/arm64
